@@ -1,0 +1,240 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.28, 0.11, 0.32, 1);
+  /* Fallback gradient to prevent white flash during image load */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.hero.visible {
+  opacity: 1;
+}
+
+/* Background image carousel */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  /* Additional fallback gradient */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.hero-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  animation: kenBurns 12s ease-in-out infinite;
+  /* Fallback color while loading */
+  background-color: #667eea;
+}
+
+/* Only show image when loaded */
+.hero-background-image.loaded {
+  transition: opacity 2.5s ease-in-out;
+}
+
+.hero-background-image.active.loaded {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Ken Burns zoom effect */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dark overlay for text contrast */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 2;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 175, 189, 0.15) 0%, transparent 50%);
+  animation: gradient 15s ease infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes gradient {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.hero-content {
+  max-width: 980px;
+  text-align: center;
+  padding: 0 40px;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-title {
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0 0 24px 0;
+  animation: fadeInUp 1s cubic-bezier(0.28, 0.11, 0.32, 1) 0.3s backwards;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+  font-size: clamp(21px, 3vw, 28px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 48px 0;
+  animation: fadeInUp 1s cubic-bezier(0.28, 0.11, 0.32, 1) 0.5s backwards;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cta {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1d1d1f;
+  border: none;
+  padding: 16px 32px;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 980px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+  animation: fadeInUp 1s cubic-bezier(0.28, 0.11, 0.32, 1) 0.7s backwards;
+  font-family: inherit;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cta:hover {
+  transform: scale(1.05);
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  animation: fadeInUp 1s cubic-bezier(0.28, 0.11, 0.32, 1) 1s backwards;
+  z-index: 3;
+}
+
+.scroll-indicator-line {
+  width: 2px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  animation: scrollDown 2s ease-in-out infinite;
+}
+
+@keyframes scrollDown {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 0 20px;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 36px;
+  }
+
+  .hero-cta {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    padding: 0 16px;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 32px;
+  }
+
+  .hero-cta {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}
